@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ticket Platform{% endblock %}</title>
+    <!-- CSS global -->
+    <link rel="stylesheet" href="{% static 'events/css/style.css' %}">
+    <!-- Optional: fonturi și iconițe -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="{% url 'about' %}">🎟️ TicketPlatform</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+                <li><a href="{% url 'terms' %}">Terms</a></li>
+                <li><a href="{% url 'privacy' %}">Privacy</a></li>
+                <li><a href="{% url 'partners' %}">Partners</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Content -->
+    <main>
+        {% block content %}
+        <!-- Conținutul fiecărei pagini va fi aici -->
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 TicketPlatform. Toate drepturile rezervate.</p>
+            <p>Follow us:
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- JS global -->
+    <script src="{% static 'events/js/script.js' %}"></script>
+</body>
+</html>
+
+
