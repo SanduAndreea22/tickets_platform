@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="hero-container">
+    <h1>Tickets Platform</h1>
+    <p class="hero-subtitle">Gestionați și cumpărați bilete rapid și ușor.</p>
+
+    <div class="user-sections">
+        <!-- Participanți -->
+        <div class="user-card participant">
+            <div class="icon">🎫</div>
+            <h2>Participanți</h2>
+            <p>Cumpără bilete la evenimente rapid și simplu.</p>
+        </div>
+
+        <!-- Organizatori -->
+        <div class="user-card organizer">
+            <div class="icon">🏢</div>
+            <h2>Organizatori</h2>
+            <p>Gestionează-ți evenimentele și vinde bilete online.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+.hero-container {
+    text-align: center;
+    padding: 80px 20px 40px;
+}
+
+.hero-container h1 {
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 50px;
+}
+
+.user-sections {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.user-card {
+    background: #f5f5f5;
+    border-radius: 15px;
+    padding: 30px 20px;
+    flex: 1 1 250px;
+    max-width: 300px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.user-card .icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.user-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.user-card p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.user-card.participant {
+    border-top: 5px solid #007bff;
+}
+
+.user-card.organizer {
+    border-top: 5px solid #28a745;
+}
+
+/* Hover effect */
+.user-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .user-sections {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+</style>
+{% endblock %}
+

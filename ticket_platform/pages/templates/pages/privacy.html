@@ -1,10 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Politica de confidențialitate - TicketPlatform{% endblock %}
 
-</body>
-</html>
+{% block content %}
+<section class="max-w-4xl mx-auto mt-10 p-8 bg-white rounded-2xl shadow-md">
+    <h1 class="text-3xl font-bold text-indigo-700 mb-6 text-center">Politica de confidențialitate</h1>
+
+    <p class="text-gray-700 leading-relaxed mb-6">
+        TicketPlatform respectă confidențialitatea datelor personale ale utilizatorilor. Informațiile colectate sunt folosite exclusiv pentru gestionarea contului și procesarea comenzilor.
+    </p>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-3 text-indigo-600">1. Colectarea datelor</h2>
+    <p class="text-gray-700 leading-relaxed mb-3">
+        Colectăm doar informațiile necesare pentru a procesa comenzile și a oferi o experiență personalizată utilizatorilor.
+    </p>
+    <ul class="list-disc list-inside text-gray-700 mb-6">
+        <li>Nume și prenume</li>
+        <li>Adresă de email</li>
+        <li>Informații legate de achiziția biletelor</li>
+    </ul>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-3 text-indigo-600">2. Folosirea datelor</h2>
+    <p class="text-gray-700 leading-relaxed mb-3">
+        Datele colectate sunt utilizate strict pentru scopuri interne și nu sunt partajate cu terți fără consimțământul explicit al utilizatorului.
+    </p>
+    <ul class="list-disc list-inside text-gray-700 mb-6">
+        <li>Procesarea comenzilor</li>
+        <li>Trimiterea notificărilor și confirmărilor</li>
+        <li>Îmbunătățirea serviciilor și experienței utilizatorului</li>
+    </ul>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-3 text-indigo-600">3. Protecția datelor</h2>
+    <p class="text-gray-700 leading-relaxed mb-6">
+        Implementăm măsuri tehnice și organizatorice pentru a proteja datele personale împotriva accesului neautorizat, pierderii sau modificării.
+    </p>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-3 text-indigo-600">4. Drepturile utilizatorilor</h2>
+    <ul class="list-disc list-inside text-gray-700 mb-6">
+        <li>Dreptul de acces la datele personale</li>
+        <li>Dreptul de rectificare a datelor</li>
+        <li>Dreptul de ștergere a datelor („dreptul de a fi uitat”)</li>
+        <li>Dreptul de a se opune prelucrării datelor</li>
+    </ul>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-3 text-indigo-600">5. Contact</h2>
+    <p class="text-gray-700 leading-relaxed">
+        Pentru orice întrebare legată de confidențialitatea datelor, ne puteți contacta la <a href="/contact/" class="text-indigo-600 underline">pagina de contact</a>.
+    </p>
+</section>
+{% endblock %}

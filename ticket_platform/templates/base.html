@@ -1,54 +1,234 @@
 <!DOCTYPE html>
+{% load static %}
+
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Ticket Platform{% endblock %}</title>
-    <!-- CSS global -->
-    <link rel="stylesheet" href="{% static 'events/css/style.css' %}">
-    <!-- Optional: fonturi și iconițe -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <title>{% block title %}TicketPlatform{% endblock %}</title>
+
+    <!-- Fonturi + Iconițe -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- CSS -->
+    <style>
+        :root {
+            --primary: #007bff;
+            --bg-light: #f5f7fa;
+            --text-dark: #222;
+            --text-light: #f9f9f9;
+            --bg-dark: #111827;
+            --nav-dark: #1f2937;
+        }
+
+        /* Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        header img {
+            height: 40px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        main {
+            padding: 2rem;
+            min-height: 80vh;
+        }
+
+        footer {
+            background: var(--nav-dark);
+            color: var(--text-light);
+            text-align: center;
+            padding: 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        nav ul.mobile {
+            display: none;
+            flex-direction: column;
+            background: var(--primary);
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 200px;
+            padding: 1rem;
+            border-radius: 0 0 5px 5px;
+        }
+
+        nav ul.mobile li {
+            margin: 0.5rem 0;
+        }
+
+        nav.active ul.mobile {
+            display: flex;
+        }
+
+        /* Dark Mode */
+        body.dark {
+            background: var(--bg-dark);
+            color: var(--text-light);
+        }
+
+        body.dark header {
+            background: var(--nav-dark);
+        }
+
+        body.dark footer {
+            background: #000;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul.desktop {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Navbar -->
     <header>
-        <nav class="navbar">
-            <div class="logo">
-                <a href="{% url 'about' %}">🎟️ TicketPlatform</a>
-            </div>
-            <ul class="nav-links">
-                <li><a href="{% url 'about' %}">About</a></li>
+        <div class="logo">
+            <a href="/" style="display: flex; align-items: center; gap: 10px; color: white; text-decoration: none;">
+                <img src="{% static 'events/img/logo.png' %}" alt="TicketPlatform Logo">
+                <span><strong>TicketPlatform</strong></span>
+            </a>
+        </div>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Meniu mobil">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <nav id="navbar">
+            <ul class="desktop">
+                <li><a href="{% url 'about' %}">Despre</a></li>
                 <li><a href="{% url 'contact' %}">Contact</a></li>
-                <li><a href="{% url 'terms' %}">Terms</a></li>
-                <li><a href="{% url 'privacy' %}">Privacy</a></li>
-                <li><a href="{% url 'partners' %}">Partners</a></li>
+                <li><a href="{% url 'terms' %}">Termeni</a></li>
+                <li><a href="{% url 'privacy' %}">Confidențialitate</a></li>
+                <li><a href="{% url 'partners' %}">Parteneri</a></li>
+            </ul>
+
+            <ul class="mobile">
+                <li><a href="{% url 'about' %}">Despre</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+                <li><a href="{% url 'terms' %}">Termeni</a></li>
+                <li><a href="{% url 'privacy' %}">Confidențialitate</a></li>
+                <li><a href="{% url 'partners' %}">Parteneri</a></li>
             </ul>
         </nav>
+
+        <button class="theme-toggle" id="themeToggle" aria-label="Schimbă tema">
+            <i class="fas fa-moon"></i>
+        </button>
     </header>
 
-    <!-- Content -->
+    <!-- Conținut -->
     <main>
         {% block content %}
-        <!-- Conținutul fiecărei pagini va fi aici -->
         {% endblock %}
     </main>
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 TicketPlatform. Toate drepturile rezervate.</p>
-            <p>Follow us:
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </p>
-        </div>
+        <p>&copy; 2025 TicketPlatform. Toate drepturile rezervate.</p>
     </footer>
 
-    <!-- JS global -->
-    <script src="{% static 'events/js/script.js' %}"></script>
+    <!-- JS -->
+    <script>
+        const themeToggle = document.getElementById("themeToggle");
+        const body = document.body;
+        const menuToggle = document.getElementById("menuToggle");
+        const navbar = document.getElementById("navbar");
+
+        // Dark mode
+        function setTheme(theme) {
+            if(theme === 'dark') {
+                body.classList.add("dark");
+                themeToggle.querySelector("i").classList.replace("fa-moon", "fa-sun");
+            } else {
+                body.classList.remove("dark");
+                themeToggle.querySelector("i").classList.replace("fa-sun", "fa-moon");
+            }
+        }
+
+        themeToggle.addEventListener("click", () => {
+            if(body.classList.contains("dark")) {
+                setTheme('light');
+                localStorage.setItem("theme", "light");
+            } else {
+                setTheme('dark');
+                localStorage.setItem("theme", "dark");
+            }
+        });
+
+        // Păstrează tema
+        const savedTheme = localStorage.getItem("theme") || "light";
+        setTheme(savedTheme);
+
+        // Mobile menu
+        menuToggle.addEventListener("click", () => {
+            navbar.classList.toggle("active");
+            menuToggle.querySelector("i").classList.toggle("fa-bars");
+            menuToggle.querySelector("i").classList.toggle("fa-times");
+        });
+    </script>
 </body>
 </html>
+
 
 

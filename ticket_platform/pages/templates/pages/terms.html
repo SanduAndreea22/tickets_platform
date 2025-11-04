@@ -1,10 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Termeni și condiții - TicketPlatform{% endblock %}
 
-</body>
-</html>
+{% block content %}
+<section class="max-w-4xl mx-auto mt-10 p-8 bg-white rounded-2xl shadow-md">
+    <h1 class="text-3xl font-bold text-indigo-700 mb-6 text-center">Termeni și condiții</h1>
+
+    <p class="text-gray-700 leading-relaxed mb-6">
+        Prin utilizarea platformei TicketPlatform, sunteți de acord cu acești termeni și condiții. Ne rezervăm dreptul de a modifica oricând conținutul site-ului sau politicile sale.
+    </p>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-3 text-indigo-600">1. Utilizarea platformei</h2>
+    <ul class="list-disc list-inside text-gray-700 mb-6">
+        <li>Utilizatorii trebuie să furnizeze informații corecte și complete.</li>
+        <li>Este interzisă folosirea platformei în scopuri ilegale sau neautorizate.</li>
+        <li>Platforma își rezervă dreptul de a suspenda conturile care încalcă regulile.</li>
+    </ul>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-3 text-indigo-600">2. Drepturile și responsabilitățile utilizatorilor</h2>
+    <ul class="list-disc list-inside text-gray-700 mb-6">
+        <li>Utilizatorii sunt responsabili pentru păstrarea confidențialității datelor contului.</li>
+        <li>Orice tranzacție efectuată prin platformă trebuie să fie autorizată de utilizator.</li>
+        <li>Utilizatorii trebuie să respecte legislația aplicabilă privind evenimentele și biletele.</li>
+    </ul>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-3 text-indigo-600">3. Răspunderea platformei</h2>
+    <ul class="list-disc list-inside text-gray-700 mb-6">
+        <li>TicketPlatform nu este responsabil pentru eventuale pierderi cauzate de utilizarea incorectă a platformei.</li>
+        <li>Nu garantăm disponibilitatea continuă a site-ului sau a serviciilor.</li>
+    </ul>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-3 text-indigo-600">4. Modificări ale termenilor</h2>
+    <p class="text-gray-700 leading-relaxed mb-6">
+        Platforma își rezervă dreptul de a modifica termenii și condițiile în orice moment. Modificările vor fi aplicabile imediat după publicare.
+    </p>
+
+    <h2 class="text-2xl font-semibold mt-6 mb-3 text-indigo-600">5. Contact</h2>
+    <p class="text-gray-700 leading-relaxed">
+        Pentru întrebări legate de termenii și condițiile platformei, ne puteți contacta prin <a href="/contact/" class="text-indigo-600 underline">pagina de contact</a>.
+    </p>
+</section>
+{% endblock %}

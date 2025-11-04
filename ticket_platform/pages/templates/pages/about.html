@@ -1,20 +1,41 @@
 {% extends 'base.html' %}
 
-{% block title %}Despre Noi - TicketPlatform{% endblock %}
+{% block title %}Despre noi - TicketPlatform{% endblock %}
 
 {% block content %}
-<section class="about-section">
-    <div class="container">
-        <h1>Despre TicketPlatform</h1>
-        <p>
-            Bine ai venit pe TicketPlatform! Aici poți descoperi evenimente uimitoare, 
-            rezerva sau cumpăra bilete și să ai o experiență completă ca participant. 
-        </p>
-        <p>
-            Platforma noastră oferă un sistem simplu și rapid pentru organizatori și participanți,
-            astfel încât fiecare eveniment să fie o reușită.
-        </p>
-        <img src="{% static 'events/img/andreea-hero.png' %}" alt="Evenimente" class="hero-image">
+<section class="relative py-16" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff;">
+  <div class="container mx-auto px-6 lg:px-20">
+    <h1 class="text-4xl md:text-5xl font-bold text-center mb-6">Despre TicketPlatform</h1>
+    <p class="text-center text-lg md:text-xl max-w-3xl mx-auto mb-12">
+      TicketPlatform conectează organizatorii de evenimente cu publicul, oferind o experiență rapidă, sigură și intuitivă.
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-10">
+      <!-- Card 1 -->
+      <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300">
+        <h3 class="text-2xl font-semibold mb-3 text-yellow-300">🎫 Bilete rapide</h3>
+        <p>Cumpără sau rezervă bilete în doar câteva secunde, fără complicații.</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300">
+        <h3 class="text-2xl font-semibold mb-3 text-green-300">🎉 Evenimente variate</h3>
+        <p>Concerte, festivaluri, conferințe și multe alte evenimente la un click distanță.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300">
+        <h3 class="text-2xl font-semibold mb-3 text-pink-300">🤝 Organizatori profesioniști</h3>
+        <p>Oferim un spațiu dedicat pentru organizatori să-și promoveze evenimentele eficient.</p>
+      </div>
     </div>
+
+    <div class="text-center mt-16">
+      <a href="/contact/" class="inline-block bg-white text-purple-700 px-8 py-3 rounded-full text-lg font-semibold hover:bg-purple-100 transition duration-300">
+        Contactează-ne
+      </a>
+    </div>
+  </div>
 </section>
 {% endblock %}
+
