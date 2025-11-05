@@ -1,10 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 
-</body>
-</html>
+<div class="min-h-screen bg-gray-50 py-12 px-6 flex justify-center items-start">
+  <div class="bg-white shadow-xl rounded-2xl p-10 w-full max-w-3xl">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <!-- Avatar / Info -->
+      <div class="flex items-center gap-6">
+        <img src="{% static 'img/profile-avatar.png' %}" alt="avatar"
+             class="w-24 h-24 rounded-full border-4 border-indigo-500 object-cover">
+        <div>
+          <h2 class="text-2xl font-bold text-gray-800">{{ user.username }}</h2>
+          <p class="text-gray-500">{{ user.email }}</p>
+          {% if user.profile.role %}
+          <span class="inline-block mt-2 bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm">
+            Rol: {{ user.profile.role }}
+          </span>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Buton logout -->
+      <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-semibold">
+          Logout
+        </button>
+      </form>
+    </div>
+
+    <hr class="my-8">
+
+    <!-- Secțiuni cont -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+      <a href="{% url 'my_tickets' %}" class="bg-indigo-50 hover:bg-indigo-100 rounded-xl p-6 transition">
+        🎫 <h3 class="font-semibold mt-2 text-indigo-700">Biletele mele</h3>
+      </a>
+      <a href="{% url 'my_reservations' %}" class="bg-purple-50 hover:bg-purple-100 rounded-xl p-6 transition">
+        📅 <h3 class="font-semibold mt-2 text-purple-700">Rezervările mele</h3>
+      </a>
+      <a href="{% url 'edit_profile' %}" class="bg-green-50 hover:bg-green-100 rounded-xl p-6 transition">
+        ✏️ <h3 class="font-semibold mt-2 text-green-700">Editează profilul</h3>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
