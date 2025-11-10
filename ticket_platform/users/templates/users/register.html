@@ -2,31 +2,33 @@
 {% load static %}
 {% block content %}
 
-<div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-600 py-12 px-4">
-  <div class="bg-white p-10 rounded-2xl shadow-2xl w-full max-w-md">
-    <h2 class="text-2xl font-bold text-center text-indigo-700 mb-6">
-      Creează un cont nou 🎟️
-    </h2>
+<section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-500 py-12 px-6">
+  <div class="bg-white/90 backdrop-blur-lg p-10 rounded-3xl shadow-2xl w-full max-w-md transform transition-all duration-500 hover:scale-[1.02]">
 
+    <!-- Titlu -->
+    <h2 class="text-3xl font-bold text-center text-indigo-700 mb-2">Creează un cont nou 🎟️</h2>
+    <p class="text-center text-gray-600 mb-8">Completează detaliile pentru a te alătura platformei noastre</p>
+
+    <!-- Formular -->
     <form method="POST" class="space-y-5">
       {% csrf_token %}
 
       <div>
-        <label for="username" class="block text-gray-700 font-medium">Nume utilizator</label>
+        <label for="username" class="block text-gray-700 font-medium mb-1">Nume utilizator</label>
         <input type="text" id="username" name="username" required
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
       </div>
 
       <div>
-        <label for="email" class="block text-gray-700 font-medium">Email</label>
+        <label for="email" class="block text-gray-700 font-medium mb-1">Email</label>
         <input type="email" id="email" name="email" required
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
       </div>
 
       <div>
-        <label for="password" class="block text-gray-700 font-medium">Parolă</label>
+        <label for="password" class="block text-gray-700 font-medium mb-1">Parolă</label>
         <input type="password" id="password" name="password" required
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
       </div>
 
       <div>
@@ -44,24 +46,39 @@
       </div>
 
       <button type="submit"
-              class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg font-semibold transition duration-200">
+              class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-lg font-semibold shadow-md transition-all duration-200">
         Creează cont
       </button>
     </form>
 
+    <!-- Mesaje -->
     {% if messages %}
       <div class="mt-4">
         {% for message in messages %}
-          <p class="text-center text-sm text-green-600">{{ message }}</p>
+          <div class="text-center text-sm {% if message.tags == 'success' %}text-green-600 bg-green-100{% else %}text-red-600 bg-red-100{% endif %} p-2 rounded-lg">
+            {{ message }}
+          </div>
         {% endfor %}
       </div>
     {% endif %}
 
-    <p class="text-center text-gray-600 mt-6">
+    <!-- Link spre login -->
+    <p class="text-center text-gray-700 mt-6">
       Ai deja cont?
-      <a href="{% url 'login' %}" class="text-indigo-600 hover:underline font-medium">Autentifică-te</a>
+      <a href="{% url 'login' %}" class="text-indigo-600 font-medium hover:underline transition">Autentifică-te</a>
     </p>
   </div>
-</div>
+</section>
+
+<style>
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+section div {
+  animation: fadeUp 0.8s ease-in-out;
+}
+</style>
 
 {% endblock %}
+

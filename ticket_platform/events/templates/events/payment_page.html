@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section class="max-w-md mx-auto py-12 px-6">
+  <h1 class="text-2xl font-bold text-center text-indigo-700 mb-6">
+    💳 Plată pentru {{ reservation.ticket_type.event.title }}
+  </h1>
+
+  <div class="bg-white shadow-xl rounded-2xl p-6">
+    <p class="text-gray-600 mb-4">
+      Tip bilet: <strong>{{ reservation.ticket_type.name }}</strong><br>
+      Cantitate: <strong>{{ reservation.quantity }}</strong><br>
+      Total: <strong>{{ payment.amount }} {{ CURRENCY|upper }}</strong>
+    </p>
+
+    <div id="payment-element"></div>
+    <button id="submit" class="mt-6 w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition">
+      Plătește
+    </button>
+
+    <div id="payment-message" class="hidden mt-4 text-center text-sm"></div>
+  </div>
+</section>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+const stripe = Stripe('{{ STRIPE_PUBLIC_KEY }}');
+const reservationId = '{{ reservation.id }}';
+
+async function initialize() {
+  const response = await fetch(`/events/payment/create-intent/${reservationId}/`);
+  const { clientSecret } = await response.json();
+
+  const elements = stripe.elements({ clientSecret });
+  const paymentElement = elements.create("payment");
+  paymentElement.mount("#payment-element");
+
+  const form = document.getElementById("submit");
+  form.addEventListener("click", async () => {
+    const { error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: window.location.origin + "/events/payment/success/",
+      },
+    });
+    if (error) alert(error.message);
+  });
+}
+initialize();
+</script>
+
+{% endblock %}

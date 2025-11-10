@@ -1,7 +1,6 @@
 from django.db import models
 from django.conf import settings
 
-# 1️⃣ Eveniment principal
 class Event(models.Model):
     organizer = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -15,6 +14,9 @@ class Event(models.Model):
     end_date = models.DateTimeField()
     image = models.ImageField(upload_to='events/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    theme_color = models.CharField(max_length=20, default="#4f46e5")
+    banner_text = models.CharField(max_length=100, blank=True, null=True)
+    promo_message = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -25,11 +27,8 @@ class Event(models.Model):
         return total
 
 
-# 2️⃣ Tipuri de bilete (VIP, Standard, etc.)
 class TicketType(models.Model):
-    event = models.ForeignKey(
-        Event, on_delete=models.CASCADE, related_name='ticket_types'
-    )
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='ticket_types')
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=8, decimal_places=2)
     total_quantity = models.PositiveIntegerField()
@@ -39,11 +38,8 @@ class TicketType(models.Model):
         return f"{self.name} - {self.event.title}"
 
 
-# 3️⃣ Rezervări (participant -> bilet)
 class Reservation(models.Model):
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reservations'
-    )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reservations')
     ticket_type = models.ForeignKey(TicketType, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -53,17 +49,20 @@ class Reservation(models.Model):
         return f"{self.user.username} - {self.ticket_type.name}"
 
 
-# 4️⃣ Plăți (simulare)
 class Payment(models.Model):
-    reservation = models.OneToOneField(Reservation, on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=8, decimal_places=2)
-    payment_date = models.DateTimeField(auto_now_add=True)
+    reservation = models.OneToOneField(
+        'Reservation', on_delete=models.CASCADE, related_name='payment'
+    )
+    amount = models.DecimalField(max_digits=9, decimal_places=2)
+    stripe_payment_intent = models.CharField(max_length=255, blank=True, null=True)
+    stripe_client_secret = models.CharField(max_length=255, blank=True, null=True)
     status = models.CharField(
         max_length=20,
-        choices=[('pending', 'Pending'), ('completed', 'Completed')],
+        choices=[('pending', 'Pending'), ('completed', 'Completed'), ('failed', 'Failed')],
         default='pending'
     )
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Plată {self.id} - {self.status}"
+        return f"Plată {self.id} - {self.reservation.user.username} ({self.status})"
 

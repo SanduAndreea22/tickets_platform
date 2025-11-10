@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Evenimentele mele - TicketPlatform{% endblock %}
+{% block content %}
+
+<section class="max-w-6xl mx-auto py-12 px-6">
+  <h1 class="text-3xl font-bold text-indigo-700 mb-8 text-center">📋 Evenimentele mele</h1>
+
+  {% if events %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for event in events %}
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+          {% if event.image %}
+            <img src="{{ event.image.url }}" alt="{{ event.title }}" class="h-40 w-full object-cover">
+          {% endif %}
+          <div class="p-6">
+            <h2 class="text-xl font-bold text-indigo-700 mb-2">{{ event.title }}</h2>
+            <p class="text-gray-600 mb-1">📍 {{ event.location }}</p>
+            <p class="text-gray-500 text-sm mb-4">🗓️ {{ event.start_date|date:"d M Y H:i" }}</p>
+
+            <div class="flex flex-wrap gap-2">
+              <a href="{% url 'edit_event' event.id %}" 
+                 class="bg-yellow-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-yellow-600">
+                ✏️ Editează
+              </a>
+              <a href="{% url 'customize_event' event.id %}" 
+                 class="bg-green-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-green-600">
+                🎨 Personalizează
+              </a>
+              <a href="{% url 'ticket_management' event.id %}" 
+                 class="bg-purple-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-purple-700">
+                🎟️ Bilete
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="text-center bg-white rounded-2xl shadow-md py-16">
+      <p class="text-gray-600 text-lg mb-4">Nu ai creat niciun eveniment încă.</p>
+      <a href="{% url 'create_event' %}" 
+         class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition">
+        ➕ Creează primul eveniment
+      </a>
+    </div>
+  {% endif %}
+</section>
+
+{% endblock %}

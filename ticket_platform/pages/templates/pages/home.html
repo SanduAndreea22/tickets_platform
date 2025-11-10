@@ -1,97 +1,133 @@
 {% extends 'base.html' %}
 
+{% block title %}TicketPlatform - Descoperă evenimentele care te inspiră{% endblock %}
+
 {% block content %}
-<div class="hero-container">
-    <h1>Tickets Platform</h1>
-    <p class="hero-subtitle">Gestionați și cumpărați bilete rapid și ușor.</p>
-
-    <div class="user-sections">
-        <!-- Participanți -->
-        <div class="user-card participant">
-            <div class="icon">🎫</div>
-            <h2>Participanți</h2>
-            <p>Cumpără bilete la evenimente rapid și simplu.</p>
-        </div>
-
-        <!-- Organizatori -->
-        <div class="user-card organizer">
-            <div class="icon">🏢</div>
-            <h2>Organizatori</h2>
-            <p>Gestionează-ți evenimentele și vinde bilete online.</p>
-        </div>
+<section class="hero">
+  <div class="container">
+    <div class="hero-text">
+      <h1>Descoperă. Rezervă. Bucură-te.</h1>
+      <p>Platforma modernă care conectează participanții și organizatorii de evenimente din toată țara.</p>
+      <a href="{% url 'events_list' %}" class="btn-primary">Vezi evenimentele</a>
     </div>
-</div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container grid">
+    <div class="feature">
+      <i class="fas fa-ticket-alt"></i>
+      <h3>Bilete rapide</h3>
+      <p>Cumpără sau rezervă bilete în câteva secunde, fără complicații.</p>
+    </div>
+    <div class="feature">
+      <i class="fas fa-lock"></i>
+      <h3>Plăți sigure</h3>
+      <p>Tranzacții protejate și procesare rapidă, fără griji.</p>
+    </div>
+    <div class="feature">
+      <i class="fas fa-calendar-alt"></i>
+      <h3>Evenimente variate</h3>
+      <p>Concerte, festivaluri, conferințe — toate într-un singur loc.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <h2>Organizează. Conectează. Inspiră.</h2>
+    <p>O platformă creată pentru a aduce împreună organizatorii și iubitorii de evenimente.</p>
+  </div>
+</section>
 
 <style>
-.hero-container {
-    text-align: center;
-    padding: 80px 20px 40px;
+.hero {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  padding: 120px 20px;
+  text-align: center;
 }
 
-.hero-container h1 {
-    font-size: 2.8rem;
-    margin-bottom: 15px;
+.hero-text {
+  max-width: 700px;
+  margin: 0 auto;
 }
 
-.hero-subtitle {
-    font-size: 1.2rem;
-    color: #555;
-    margin-bottom: 50px;
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
 }
 
-.user-sections {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  opacity: 0.9;
 }
 
-.user-card {
-    background: #f5f5f5;
-    border-radius: 15px;
-    padding: 30px 20px;
-    flex: 1 1 250px;
-    max-width: 300px;
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
+.btn-primary {
+  background: white;
+  color: #4f46e5;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.btn-primary:hover {
+  background: #f3f4f6;
 }
 
-.user-card .icon {
-    font-size: 3rem;
-    margin-bottom: 15px;
+.features {
+  background: #f9fafb;
+  padding: 80px 20px;
+}
+.features .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 40px;
+}
+.feature {
+  text-align: center;
+  padding: 20px;
+}
+.feature i {
+  font-size: 2.5rem;
+  color: #4f46e5;
+  margin-bottom: 15px;
+}
+.feature h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #111827;
 }
 
-.user-card h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+.cta {
+  padding: 100px 20px;
+  text-align: center;
 }
-
-.user-card p {
-    font-size: 1rem;
-    color: #555;
+.cta h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #111827;
 }
-
-.user-card.participant {
-    border-top: 5px solid #007bff;
-}
-
-.user-card.organizer {
-    border-top: 5px solid #28a745;
-}
-
-/* Hover effect */
-.user-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+.cta p {
+  color: #555;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .user-sections {
-        flex-direction: column;
-        gap: 20px;
-    }
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
 }
 </style>
 {% endblock %}
+
 

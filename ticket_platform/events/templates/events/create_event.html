@@ -1,10 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
 
-</body>
-</html>
+<section class="max-w-3xl mx-auto py-12 px-6">
+  <h1 class="text-3xl font-bold text-indigo-700 mb-8 text-center">🎤 Creează un nou eveniment</h1>
+
+  <form method="post" enctype="multipart/form-data" class="space-y-6">
+    {% csrf_token %}
+
+    <div>
+      <label class="block text-gray-700 font-semibold mb-2">Titlu eveniment</label>
+      <input type="text" name="title" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-semibold mb-2">Descriere</label>
+      <textarea name="description" rows="5" class="w-full border border-gray-300 rounded-lg px-4 py-2" required></textarea>
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-semibold mb-2">Locație</label>
+      <input type="text" name="location" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+    </div>
+
+    <div class="grid grid-cols-2 gap-6">
+      <div>
+        <label class="block text-gray-700 font-semibold mb-2">Data început</label>
+        <input type="datetime-local" name="start_date" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+      </div>
+      <div>
+        <label class="block text-gray-700 font-semibold mb-2">Data sfârșit</label>
+        <input type="datetime-local" name="end_date" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-semibold mb-2">Imagine</label>
+      <input type="file" name="image" accept="image/*" class="w-full">
+    </div>
+
+    <hr class="my-6 border-gray-300">
+
+    <h2 class="text-xl font-semibold text-indigo-700 mb-4">🎟️ Tipuri de bilete</h2>
+    <div id="ticket-container" class="space-y-4">
+      <div class="grid grid-cols-3 gap-4">
+        <input type="text" name="ticket_name" placeholder="Tip bilet (ex: Standard)" class="border border-gray-300 rounded-lg px-3 py-2">
+        <input type="number" name="ticket_price" placeholder="Preț (RON)" step="0.01" class="border border-gray-300 rounded-lg px-3 py-2">
+        <input type="number" name="ticket_quantity" placeholder="Cantitate" class="border border-gray-300 rounded-lg px-3 py-2">
+      </div>
+    </div>
+
+    <button type="button" id="add-ticket" class="bg-gray-200 px-4 py-2 rounded-lg text-sm mt-2 hover:bg-gray-300 transition">
+      + Adaugă tip de bilet
+    </button>
+
+    <div class="text-center mt-8">
+      <button type="submit" class="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition">
+        Creează eveniment
+      </button>
+    </div>
+  </form>
+</section>
+
+<script>
+document.getElementById('add-ticket').addEventListener('click', function() {
+  const container = document.getElementById('ticket-container');
+  const newTicket = document.createElement('div');
+  newTicket.classList.add('grid', 'grid-cols-3', 'gap-4', 'mt-2');
+  newTicket.innerHTML = `
+    <input type="text" name="ticket_name" placeholder="Tip bilet" class="border border-gray-300 rounded-lg px-3 py-2">
+    <input type="number" name="ticket_price" placeholder="Preț (RON)" step="0.01" class="border border-gray-300 rounded-lg px-3 py-2">
+    <input type="number" name="ticket_quantity" placeholder="Cantitate" class="border border-gray-300 rounded-lg px-3 py-2">
+  `;
+  container.appendChild(newTicket);
+});
+</script>
+
+{% endblock %}

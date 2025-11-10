@@ -1,10 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}{{ event.title }} - Detalii eveniment{% endblock %}
 
-</body>
-</html>
+{% block content %}
+<section class="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden mt-10">
+
+  <!-- Banner imagine -->
+  <div class="relative">
+    {% if event.image %}
+      <img src="{{ event.image.url }}" alt="{{ event.title }}" class="w-full h-80 object-cover">
+    {% else %}
+      <img src="https://via.placeholder.com/1200x400?text=Fără+Imagine" class="w-full h-80 object-cover">
+    {% endif %}
+
+    {% if event.banner_text %}
+      <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <h2 class="text-3xl md:text-4xl font-bold text-white text-center drop-shadow-lg">
+          {{ event.banner_text }}
+        </h2>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Conținut principal -->
+  <div class="p-8">
+    <h1 class="text-4xl font-bold mb-4" style="color: {{ event.theme_color }};">
+      {{ event.title }}
+    </h1>
+    <p class="text-gray-700 mb-6">{{ event.description }}</p>
+
+    {% if event.promo_message %}
+      <div class="p-4 mb-8 rounded-xl" style="background-color: {{ event.theme_color }}15;">
+        <p class="text-lg font-medium" style="color: {{ event.theme_color }};">
+          🎉 {{ event.promo_message }}
+        </p>
+      </div>
+    {% endif %}
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 text-gray-600">
+      <p>📍 <strong>Locație:</strong> {{ event.location }}</p>
+      <p>🗓️ <strong>Începe:</strong> {{ event.start_date|date:"d M Y H:i" }}</p>
+      <p>🏁 <strong>Se termină:</strong> {{ event.end_date|date:"d M Y H:i" }}</p>
+    </div>
+
+    <!-- Bilete disponibile -->
+    <h2 class="text-2xl font-semibold mb-4" style="color: {{ event.theme_color }};">
+      Tipuri de bilete
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      {% for ticket in event.ticket_types.all %}
+        <div class="border rounded-xl p-4 shadow hover:shadow-lg transition">
+          <h3 class="font-bold text-lg text-gray-800 mb-2">{{ ticket.name }}</h3>
+          <p class="text-gray-600 mb-2">💰 {{ ticket.price }} RON</p>
+          <p class="text-sm text-gray-500 mb-4">
+            {{ ticket.available_quantity }} bilete disponibile
+          </p>
+
+          {% if user.is_authenticated and user.is_participant %}
+            <form method="post" action="">
+              {% csrf_token %}
+              <input type="hidden" name="ticket_id" value="{{ ticket.id }}">
+              <input type="number" name="quantity" value="1" min="1" max="{{ ticket.available_quantity }}"
+                     class="border rounded-lg px-2 py-1 w-16 text-center">
+              <button type="submit"
+                      class="text-white px-4 py-2 rounded-lg text-sm hover:opacity-90 transition ml-2"
+                      style="background-color: {{ event.theme_color }};">
+                Rezervă
+              </button>
+            </form>
+          {% else %}
+            <p class="text-sm text-gray-400">Autentifică-te ca participant pentru a rezerva.</p>
+          {% endif %}
+        </div>
+      {% empty %}
+        <p class="text-gray-500 col-span-3 text-center">Momentan nu există bilete definite.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
+

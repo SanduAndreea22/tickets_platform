@@ -1,28 +1,25 @@
 <!DOCTYPE html>
 {% load static %}
-
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}TicketPlatform{% endblock %}</title>
 
-    <!-- Fonturi + Iconițe -->
+    <!-- Font & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- CSS -->
     <style>
         :root {
-            --primary: #007bff;
-            --bg-light: #f5f7fa;
-            --text-dark: #222;
-            --text-light: #f9f9f9;
+            --primary: #4f46e5;
+            --secondary: #6366f1;
+            --bg-light: #f9fafb;
             --bg-dark: #111827;
-            --nav-dark: #1f2937;
+            --text-dark: #1f2937;
+            --text-light: #f9f9f9;
         }
 
-        /* Reset */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -35,21 +32,25 @@
         header {
             background: var(--primary);
             color: white;
-            padding: 0.8rem 2rem;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        header img {
+        .logo img {
             height: 40px;
         }
 
         nav ul {
-            list-style: none;
             display: flex;
-            gap: 1.5rem;
+            list-style: none;
+            gap: 1.2rem;
+            align-items: center;
         }
 
         nav a {
@@ -63,28 +64,6 @@
             opacity: 0.8;
         }
 
-        main {
-            padding: 2rem;
-            min-height: 80vh;
-        }
-
-        footer {
-            background: var(--nav-dark);
-            color: var(--text-light);
-            text-align: center;
-            padding: 1.2rem;
-            font-size: 0.9rem;
-        }
-
-        .theme-toggle {
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-
-        /* Mobile Menu */
         .menu-toggle {
             display: none;
             font-size: 1.5rem;
@@ -101,17 +80,74 @@
             position: absolute;
             top: 100%;
             right: 0;
-            width: 200px;
+            width: 220px;
             padding: 1rem;
-            border-radius: 0 0 5px 5px;
-        }
-
-        nav ul.mobile li {
-            margin: 0.5rem 0;
+            border-radius: 0 0 8px 8px;
         }
 
         nav.active ul.mobile {
             display: flex;
+        }
+
+        main {
+            padding: 2rem;
+            min-height: 80vh;
+        }
+
+        footer {
+            background: #1f2937;
+            color: var(--text-light);
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Messages */
+        .messages {
+            max-width: 900px;
+            margin: 1rem auto;
+        }
+        .messages div {
+            background: #eef3ff;
+            border-left: 4px solid var(--primary);
+            margin-bottom: 10px;
+            padding: 12px 16px;
+            border-radius: 6px;
+            color: var(--text-dark);
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 120%;
+            background: white;
+            color: var(--text-dark);
+            min-width: 180px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px 15px;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .dropdown-content a:hover {
+            background: #eef3ff;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
 
         /* Dark Mode */
@@ -121,7 +157,7 @@
         }
 
         body.dark header {
-            background: var(--nav-dark);
+            background: #1f2937;
         }
 
         body.dark footer {
@@ -133,7 +169,6 @@
             nav ul.desktop {
                 display: none;
             }
-
             .menu-toggle {
                 display: block;
             }
@@ -141,94 +176,132 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <header>
-        <div class="logo">
-            <a href="/" style="display: flex; align-items: center; gap: 10px; color: white; text-decoration: none;">
-                <img src="{% static 'events/img/logo.png' %}" alt="TicketPlatform Logo">
-                <span><strong>TicketPlatform</strong></span>
-            </a>
-        </div>
 
-        <button class="menu-toggle" id="menuToggle" aria-label="Meniu mobil">
-            <i class="fas fa-bars"></i>
-        </button>
+<header>
+    <div class="logo">
+        <a href="/" style="display: flex; align-items: center; gap: 10px; color: white; text-decoration: none;">
+            <img src="{% static 'events/img/logo.png' %}" alt="TicketPlatform Logo">
+            <strong>TicketPlatform</strong>
+        </a>
+    </div>
 
-        <nav id="navbar">
-            <ul class="desktop">
-                <li><a href="{% url 'about' %}">Despre</a></li>
-                <li><a href="{% url 'contact' %}">Contact</a></li>
-                <li><a href="{% url 'terms' %}">Termeni</a></li>
-                <li><a href="{% url 'privacy' %}">Confidențialitate</a></li>
-                <li><a href="{% url 'partners' %}">Parteneri</a></li>
-            </ul>
+    <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
 
-            <ul class="mobile">
-                <li><a href="{% url 'about' %}">Despre</a></li>
-                <li><a href="{% url 'contact' %}">Contact</a></li>
-                <li><a href="{% url 'terms' %}">Termeni</a></li>
-                <li><a href="{% url 'privacy' %}">Confidențialitate</a></li>
-                <li><a href="{% url 'partners' %}">Parteneri</a></li>
-            </ul>
-        </nav>
+    <nav id="navbar">
+        <ul class="desktop">
+            <li><a href="{% url 'events_list' %}">Evenimente</a></li>
+            <li><a href="{% url 'about' %}">Despre</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+            <li><a href="{% url 'partners' %}">Parteneri</a></li>
+            <li><a href="{% url 'terms' %}">Termeni</a></li>
 
-        <button class="theme-toggle" id="themeToggle" aria-label="Schimbă tema">
-            <i class="fas fa-moon"></i>
-        </button>
-    </header>
+            {% if user.is_authenticated %}
+                {% if user.is_organizer %}
+                    <li><a href="{% url 'my_events' %}">📋 Evenimentele mele</a></li>
+                    <li><a href="{% url 'create_event' %}">➕ Creează Eveniment</a></li>
+                {% elif user.is_participant %}
+                    <li><a href="{% url 'my_tickets' %}">🎟️ Biletele mele</a></li>
+                    <li><a href="{% url 'my_reservations' %}">📅 Rezervările mele</a></li>
+                {% endif %}
 
-    <!-- Conținut -->
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+                <li class="dropdown">
+                    <a href="#"><i class="fa fa-user"></i> {{ user.username }}</a>
+                    <div class="dropdown-content">
+                        <a href="{% url 'profile' %}"><i class="fa fa-id-badge"></i> Profil</a>
+                        <a href="{% url 'logout' %}"><i class="fa fa-right-from-bracket"></i> Logout</a>
+                    </div>
+                </li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register' %}">Register</a></li>
+            {% endif %}
+        </ul>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 TicketPlatform. Toate drepturile rezervate.</p>
-    </footer>
+        <!-- Mobile Menu -->
+        <ul class="mobile">
+            <li><a href="{% url 'events_list' %}">Evenimente</a></li>
+            <li><a href="{% url 'about' %}">Despre</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+            <li><a href="{% url 'partners' %}">Parteneri</a></li>
+            <li><a href="{% url 'terms' %}">Termeni</a></li>
 
-    <!-- JS -->
-    <script>
-        const themeToggle = document.getElementById("themeToggle");
-        const body = document.body;
-        const menuToggle = document.getElementById("menuToggle");
-        const navbar = document.getElementById("navbar");
+            {% if user.is_authenticated %}
+                {% if user.is_organizer %}
+                    <li><a href="{% url 'my_events' %}">📋 Evenimentele mele</a></li>
+                    <li><a href="{% url 'create_event' %}">➕ Creează Eveniment</a></li>
+                {% elif user.is_participant %}
+                    <li><a href="{% url 'my_tickets' %}">🎟️ Biletele mele</a></li>
+                    <li><a href="{% url 'my_reservations' %}">📅 Rezervările mele</a></li>
+                {% endif %}
+                <li><a href="{% url 'profile' %}">Profil</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register' %}">Register</a></li>
+            {% endif %}
+        </ul>
+    </nav>
 
-        // Dark mode
-        function setTheme(theme) {
-            if(theme === 'dark') {
-                body.classList.add("dark");
-                themeToggle.querySelector("i").classList.replace("fa-moon", "fa-sun");
-            } else {
-                body.classList.remove("dark");
-                themeToggle.querySelector("i").classList.replace("fa-sun", "fa-moon");
-            }
+    <button class="menu-toggle" id="themeToggle" aria-label="Schimbă tema">
+        <i class="fas fa-moon"></i>
+    </button>
+</header>
+
+<!-- Mesaje Django -->
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+        <div>{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    <p>&copy; 2025 TicketPlatform — Toate drepturile rezervate.</p>
+</footer>
+
+<script>
+    const themeToggle = document.getElementById("themeToggle");
+    const body = document.body;
+    const menuToggle = document.getElementById("menuToggle");
+    const navbar = document.getElementById("navbar");
+
+    // Dark mode persist
+    function setTheme(theme) {
+        if(theme === 'dark') {
+            body.classList.add("dark");
+            themeToggle.querySelector("i").classList.replace("fa-moon", "fa-sun");
+        } else {
+            body.classList.remove("dark");
+            themeToggle.querySelector("i").classList.replace("fa-sun", "fa-moon");
         }
+    }
 
-        themeToggle.addEventListener("click", () => {
-            if(body.classList.contains("dark")) {
-                setTheme('light');
-                localStorage.setItem("theme", "light");
-            } else {
-                setTheme('dark');
-                localStorage.setItem("theme", "dark");
-            }
-        });
+    themeToggle.addEventListener("click", () => {
+        if(body.classList.contains("dark")) {
+            setTheme('light');
+            localStorage.setItem("theme", "light");
+        } else {
+            setTheme('dark');
+            localStorage.setItem("theme", "dark");
+        }
+    });
 
-        // Păstrează tema
-        const savedTheme = localStorage.getItem("theme") || "light";
-        setTheme(savedTheme);
+    // Load saved theme
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
 
-        // Mobile menu
-        menuToggle.addEventListener("click", () => {
-            navbar.classList.toggle("active");
-            menuToggle.querySelector("i").classList.toggle("fa-bars");
-            menuToggle.querySelector("i").classList.toggle("fa-times");
-        });
-    </script>
+    // Mobile menu
+    menuToggle.addEventListener("click", () => {
+        navbar.classList.toggle("active");
+        menuToggle.querySelector("i").classList.toggle("fa-bars");
+        menuToggle.querySelector("i").classList.toggle("fa-times");
+    });
+</script>
+
 </body>
 </html>
-
-
-
